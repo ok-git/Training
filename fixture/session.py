@@ -17,3 +17,6 @@ class SessionHelper:
     def logout(self):
         wd = self.app.wd
         wd.find_element_by_link_text("Logout").click()
+        # Bugfix for firefox webdriver - begin
+        wd.find_element_by_name("user")
+        # Bugfix for firefox webdriver - end
