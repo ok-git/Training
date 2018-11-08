@@ -30,10 +30,12 @@ def test_edit_first_contact(app):
                      notes="Это редакция контакта"))
     app.session.logout()
 
-
 def test_add_all_contacts_to_group(app):
     app.session.login(username="admin", password="secret")
     app.contact.add_all_contacts_to_group()
     app.session.logout()
 
-
+def test_remove_all_contacts_from_group(app):
+    app.session.login(username="admin", password="secret")
+    app.contact.remove_all_contacts_from_group()
+    app.session.logout()

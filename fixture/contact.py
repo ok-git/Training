@@ -5,6 +5,15 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    def remove_all_contacts_from_group(self):
+        wd = self.app.wd
+        Select(wd.find_element_by_name("group")).select_by_visible_text("Group2 Name")
+        # select all contacts
+        wd.find_element_by_xpath("//input[2]").click()
+        # remove contacts from group
+        wd.find_element_by_name("remove").click()
+        self.app.open_home_page()
+
     def add_all_contacts_to_group(self):
         wd = self.app.wd
         #select all contacts
