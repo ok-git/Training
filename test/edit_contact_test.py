@@ -9,7 +9,7 @@ def test_edit_first_contact(app):
                      middlename="Васильевич",
                      lastname="Васильев",
                      title="Бухгалтер",
-                     company="ООО Тоже Хороший софт",
+                     company="ООО То же Хороший софт",
                      address="г. Город-2, ул. Улица-2, д. 2, оф. 306",
                      home="9234567",
                      mobile="9345678",
@@ -29,3 +29,11 @@ def test_edit_first_contact(app):
                      phone2="9122334455",
                      notes="Это редакция контакта"))
     app.session.logout()
+
+
+def test_add_all_contacts_to_group(app):
+    app.session.login(username="admin", password="secret")
+    app.contact.add_all_contacts_to_group()
+    app.session.logout()
+
+

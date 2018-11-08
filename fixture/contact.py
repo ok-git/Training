@@ -5,6 +5,14 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    def add_all_contacts_to_group(self):
+        wd = self.app.wd
+        #select all contacts
+        wd.find_element_by_xpath("//input[2]").click()
+        #add contacts to first group in the Add_group dropdown box
+        wd.find_element_by_name("add").click()
+        self.app.open_home_page()
+
     def edit_first_contact(self, Contact):
         wd = self.app.wd
         # init edition
@@ -71,6 +79,7 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         #accept deletion
         wd.switch_to.alert.accept()
+        self.app.open_home_page()
 
     def create(self, Contact):
         wd = self.app.wd
