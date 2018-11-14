@@ -5,10 +5,11 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
-    def remove_all_contacts_from_group(self):
+    def remove_all_contacts_from_group(self, Group):
         wd = self.app.wd
         self.app.open_home_page()
-        Select(wd.find_element_by_name("group")).select_by_visible_text("Group2 Name")
+        #select group by group_name
+        Select(wd.find_element_by_name("group")).select_by_visible_text(Group.name)
         self.select_all_contacts()
         # remove contacts from group
         wd.find_element_by_name("remove").click()
@@ -18,10 +19,12 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_xpath("//input[2]").click()
 
-    def add_all_contacts_to_group(self):
+    def add_all_contacts_to_group(self, Group):
         wd = self.app.wd
         self.app.open_home_page()
         self.select_all_contacts()
+        # select group by group_name
+        Select(wd.find_element_by_name("group")).select_by_visible_text(Group.name)
         #add contacts to first group in the Add_group dropdown box
         wd.find_element_by_name("add").click()
         self.app.open_home_page()
@@ -92,3 +95,8 @@ class ContactHelper:
             wd.find_element_by_name(field_name).click()
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
+
+    def count(self):
+        wd = self.app.wd
+        self.app.open_home_page()
+        return len(wd.find_elements_by_name("selected[]"))
