@@ -12,7 +12,7 @@ def test_edit_firstname_first_contact(app):
     app.contact.edit_first_contact(Contact(firstname="Василий"))
 
 
-def test_group_membership_for_all_contacts(app):
+def test_modify_group_membership_for_all_contacts(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(
             firstname="Петр",

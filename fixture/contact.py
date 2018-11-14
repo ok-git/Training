@@ -24,7 +24,7 @@ class ContactHelper:
         self.app.open_home_page()
         self.select_all_contacts()
         # select group by group_name
-        Select(wd.find_element_by_name("group")).select_by_visible_text(Group.name)
+        Select(wd.find_element_by_name("to_group")).select_by_visible_text(Group.name)
         #add contacts to first group in the Add_group dropdown box
         wd.find_element_by_name("add").click()
         self.app.open_home_page()
