@@ -48,7 +48,10 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         #accept deletion
         wd.switch_to.alert.accept()
-        self.app.open_home_page()
+        #Slowdown method to make deletion test more stable - begin
+        wd.get("http://localhost/addressbook/")
+        wd.find_elements_by_name("searchstring")
+        # Slowdown method to make deletion test more stable - end
 
     def create(self, Contact):
         wd = self.app.wd
@@ -107,8 +110,12 @@ class ContactHelper:
         self.app.open_home_page()
         contacts = []
         for element in wd.find_elements_by_css_selector("tr[name*=entry]"):
+            cells = element.find_elements_by_tag_name("td")
+            lastname = cells[1].text
+            firstname = cells[2].text
+            #alternative method
+            #lastname = element.find_element_by_css_selector("*:nth-of-type(2)").text
+            #firstname = element.find_element_by_css_selector("*:nth-of-type(3)").text
             id = element.find_element_by_name("selected[]").get_attribute("value")
-            lastname = element.find_element_by_css_selector("*:nth-of-type(2)").text
-            firstname = element.find_element_by_css_selector("*:nth-of-type(3)").text
             contacts.append(Contact(firstname=firstname, lastname=lastname, id=id))
         return contacts
