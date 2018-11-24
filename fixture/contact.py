@@ -31,10 +31,13 @@ class ContactHelper:
         self.app.open_home_page()
 
     def edit_first_contact(self, new_contact_data):
+        self.edit_contact_by_index(0, new_contact_data)
+
+    def edit_contact_by_index(self, index, new_contact_data):
         wd = self.app.wd
         self.app.open_home_page()
         # init edition
-        wd.find_element_by_xpath("//img[@alt='Edit']").click()
+        wd.find_elements_by_xpath("//img[@alt='Edit']")[index].click()
         self.fill_contact_form(new_contact_data)
         # accept contact edition
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
