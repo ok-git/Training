@@ -38,20 +38,22 @@ class ContactHelper:
         self.fill_contact_form(new_contact_data)
         # accept contact edition
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        self.contacts_cache = None
 
     def delete_first_contact(self):
         wd = self.app.wd
         self.app.open_home_page()
-        #select first contact
+        # select first contact
         wd.find_element_by_name("selected[]").click()
-        #delete contact
+        # delete contact
         wd.find_element_by_xpath("//input[@value='Delete']").click()
-        #accept deletion
+        # accept deletion
         wd.switch_to.alert.accept()
-        #Slowdown method to make deletion test more stable - begin
+        # Slowdown method to make deletion test more stable - begin
         wd.get("http://localhost/addressbook/")
-        wd.find_elements_by_name("searchstring")
+        wd.find_element_by_xpath("//input[@value='Delete']")
         # Slowdown method to make deletion test more stable - end
+        self.contacts_cache = None
 
     def create(self, Contact):
         wd = self.app.wd
@@ -61,6 +63,7 @@ class ContactHelper:
         self.fill_contact_form(Contact)
         # submit contact creation
         wd.find_element_by_xpath("(//input[@name='submit'])[2]").click()
+        self.contacts_cache = None
 
     def fill_contact_form(self, Contact):
         self.change_field_value("firstname", Contact.firstname)
@@ -105,17 +108,20 @@ class ContactHelper:
         self.app.open_home_page()
         return len(wd.find_elements_by_name("selected[]"))
 
+    contacts_cache = None
+
     def get_contacts_list(self):
-        wd = self.app.wd
-        self.app.open_home_page()
-        contacts = []
-        for element in wd.find_elements_by_css_selector("tr[name*=entry]"):
-            cells = element.find_elements_by_tag_name("td")
-            lastname = cells[1].text
-            firstname = cells[2].text
-            #alternative method
-            #lastname = element.find_element_by_css_selector("*:nth-of-type(2)").text
-            #firstname = element.find_element_by_css_selector("*:nth-of-type(3)").text
-            id = element.find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(firstname=firstname, lastname=lastname, id=id))
-        return contacts
+        if self.contacts_cache is None:
+            wd = self.app.wd
+            self.app.open_home_page()
+            self.contacts_cache = []
+            for element in wd.find_elements_by_css_selector("tr[name*=entry]"):
+                cells = element.find_elements_by_tag_name("td")
+                lastname = cells[1].text
+                firstname = cells[2].text
+                # alternative method
+                #lastname = element.find_element_by_css_selector("*:nth-of-type(2)").text
+                #firstname = element.find_element_by_css_selector("*:nth-of-type(3)").text
+                id = element.find_element_by_name("selected[]").get_attribute("value")
+                self.contacts_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
+        return list(self.contacts_cache)
