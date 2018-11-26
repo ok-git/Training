@@ -56,6 +56,7 @@ class ContactHelper:
         # accept deletion
         wd.switch_to.alert.accept()
         # Slowdown method to make deletion test more stable - begin
+        wd.find_element_by_css_selector("div.msgbox")
         wd.get("http://localhost/addressbook/")
         wd.find_element_by_xpath("//input[@value='Delete']")
         # Slowdown method to make deletion test more stable - end
@@ -128,6 +129,55 @@ class ContactHelper:
                 # alternative method
                 #lastname = element.find_element_by_css_selector("*:nth-of-type(2)").text
                 #firstname = element.find_element_by_css_selector("*:nth-of-type(3)").text
+                address = cells[3].text
+                all_emails = cells[4].text.splitlines()
+                all_phones = cells[5].text.splitlines()
                 id = element.find_element_by_name("selected[]").get_attribute("value")
-                self.contacts_cache.append(Contact(firstname=firstname, lastname=lastname, id=id))
+                self.contacts_cache.append(Contact(firstname=firstname,
+                                                   lastname=lastname,
+                                                   address=address,
+                                                   home=all_phones[0],
+                                                   mobile=all_phones[1],
+                                                   work=all_phones[2],
+                                                   phone2=all_phones[3],
+                                                   email=all_emails[0],
+                                                   email2=all_emails[1],
+                                                   email3=all_emails[2],
+                                                   id=id))
         return list(self.contacts_cache)
+
+    def open_contact_to_edit_by_index(self, index):
+        wd = self.app.wd
+        self.app.open_home_page()
+        row = wd.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
+
+    def get_contact_info_from_edit_page(self, index):
+        wd = self.app.wd
+        self.open_contact_to_edit_by_index(index)
+        id = wd.find_element_by_name("id").get_attribute("value")
+        firstname = wd.find_element_by_name("firstname").get_attribute("value")
+        lastname = wd.find_element_by_name("lastname").get_attribute("value")
+        address = wd.find_element_by_name("address").get_attribute("value")
+        home = wd.find_element_by_name("home").get_attribute("value")
+        mobile = wd.find_element_by_name("mobile").get_attribute("value")
+        work = wd.find_element_by_name("work").get_attribute("value")
+        phone2 = wd.find_element_by_name("phone2").get_attribute("value")
+        email = wd.find_element_by_name("email").get_attribute("value")
+        email2 = wd.find_element_by_name("email2").get_attribute("value")
+        email3 = wd.find_element_by_name("email3").get_attribute("value")
+        self.app.open_home_page()
+        return Contact(
+            firstname=firstname,
+            lastname=lastname,
+            address=address,
+            home=home,
+            mobile=mobile,
+            work=work,
+            email=email,
+            email2=email2,
+            email3=email3,
+            phone2=phone2,
+            id=id
+            )
