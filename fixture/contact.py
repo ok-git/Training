@@ -130,19 +130,14 @@ class ContactHelper:
                 #lastname = element.find_element_by_css_selector("*:nth-of-type(2)").text
                 #firstname = element.find_element_by_css_selector("*:nth-of-type(3)").text
                 address = cells[3].text
-                all_emails = cells[4].text.splitlines()
-                all_phones = cells[5].text.splitlines()
+                all_emails = cells[4].text
+                all_phones = cells[5].text
                 id = element.find_element_by_name("selected[]").get_attribute("value")
                 self.contacts_cache.append(Contact(firstname=firstname,
                                                    lastname=lastname,
                                                    address=address,
-                                                   home=all_phones[0],
-                                                   mobile=all_phones[1],
-                                                   work=all_phones[2],
-                                                   phone2=all_phones[3],
-                                                   email=all_emails[0],
-                                                   email2=all_emails[1],
-                                                   email3=all_emails[2],
+                                                   all_emails_from_homepage=all_emails,
+                                                   all_phones_from_homepage=all_phones,
                                                    id=id))
         return list(self.contacts_cache)
 

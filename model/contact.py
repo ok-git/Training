@@ -25,6 +25,8 @@ class Contact:
                  address2=None,
                  phone2=None,
                  notes=None,
+                 all_phones_from_homepage=None,
+                 all_emails_from_homepage=None,
                  id=None):
         self.firstname = firstname
         self.middlename = middlename
@@ -49,6 +51,8 @@ class Contact:
         self.address2 = address2
         self.phone2 = phone2
         self.notes = notes
+        self.all_phones_from_homepage = all_phones_from_homepage
+        self.all_emails_from_homepage = all_emails_from_homepage
         self.id = id
 
     def __repr__(self):
