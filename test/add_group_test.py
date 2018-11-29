@@ -5,13 +5,23 @@ import random
 import string
 
 
-def random_string(prefix, maxlen):
-    symbols = string.ascii_letters + string.digits + string.punctuation + " "*10
-    return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
+def var_or_fixed(maxlen, fixedlen):
+    if fixedlen:
+        return maxlen
+    else:
+        return random.randrange(maxlen)
+
+
+def random_string(prefix, maxlen, fixedlen=False):
+    symbols = string.ascii_letters + string.digits + " "*10
+    return prefix + "".join([random.choice(symbols) for i in range(var_or_fixed(maxlen, fixedlen))])
+# + string.punctuation
 
 
 testdata = [Group(name="", header="", footer="")]+[
-    Group(name=random_string("name_", 10), header=random_string("header_", 15), footer=random_string("footer_", 15))
+    Group(name=random_string("name_", 10),
+          header=random_string("header_", 15),
+          footer=random_string("footer_", 15))
     for i in range(5)
 ]
 
