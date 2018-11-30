@@ -21,7 +21,7 @@ testdata = [Contact(
         lastname=rand_str("Last_", 7, spaces=False),
         title=rand_str("Title_", 7),
         company=rand_str("Company_", 7),
-        address=rand_str("Addr_", 90, fixedlen=True, spaces=False),
+        address=rand_str("Addr_", 70, fixedlen=True, spaces=False),
         home=rand_str("H_", 9),
         mobile=rand_str("M_", 9),
         work=rand_str("W_", 9),
