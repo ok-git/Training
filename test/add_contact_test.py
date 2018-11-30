@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
 import pytest
-from test.add_group_test import random_string as rand_str
+from test.address_book_lib import random_day_of_month
+from test.address_book_lib import random_month
+from test.address_book_lib import random_year
+from test.address_book_lib import random_string as rand_str
 
 
 testdata = [Contact(
@@ -13,15 +16,26 @@ testdata = [Contact(
         aday="-", amonth="-", ayear="",
         address2="", phone2="", notes="")]+[
     Contact(
-        firstname=rand_str("First_", 7), middlename=rand_str("Middle_", 7), lastname=rand_str("Last_", 7),
-        title=rand_str("Title_", 7), company=rand_str("Company_", 7), address=rand_str("Addr_", 90, fixedlen=True),
-        home=rand_str("H_", 9), mobile=rand_str("M_", 9), work=rand_str("W_", 9), fax=rand_str("F_", 7),
-        email=rand_str("Em1_", 9), email2=rand_str("Em2_", 9), email3=rand_str("Em3_", 9), homepage=rand_str("Hp_", 15),
-        bday="-", bmonth="-", byear="",
-        aday="-", amonth="-", ayear="",
-        address2=rand_str("Addr2_", 90, fixedlen=True), phone2=rand_str("Ph2_", 9),
+        firstname=rand_str("First_", 7, spaces=False),
+        middlename=rand_str("Middle_", 7),
+        lastname=rand_str("Last_", 7, spaces=False),
+        title=rand_str("Title_", 7),
+        company=rand_str("Company_", 7),
+        address=rand_str("Addr_", 90, fixedlen=True, spaces=False),
+        home=rand_str("H_", 9),
+        mobile=rand_str("M_", 9),
+        work=rand_str("W_", 9),
+        fax=rand_str("F_", 7),
+        email=rand_str("Em1_", 9, spaces=False),
+        email2=rand_str("Em2_", 9, spaces=False),
+        email3=rand_str("Em3_", 9, spaces=False),
+        homepage=rand_str("Hp_", 15),
+        bday=random_day_of_month(), bmonth=random_month(), byear=random_year(),
+        aday=random_day_of_month(), amonth=random_month(), ayear=random_year(),
+        address2=rand_str("Addr2_", 90, fixedlen=True),
+        phone2=rand_str("Ph2_", 9),
         notes=rand_str("Notes_", 150, fixedlen=True))
-    for i in range(2)
+    for i in range(3)
 ]
 
 

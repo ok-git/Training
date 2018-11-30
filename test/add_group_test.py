@@ -1,27 +1,13 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
 import pytest
-import random
-import string
-
-
-def var_or_fixed(maxlen, fixedlen):
-    if fixedlen:
-        return maxlen
-    else:
-        return random.randrange(maxlen)
-
-
-def random_string(prefix, maxlen, fixedlen=False):
-    symbols = string.ascii_letters + string.digits + " "*10
-    return prefix + "".join([random.choice(symbols) for i in range(var_or_fixed(maxlen, fixedlen))])
-# + string.punctuation
+from test.address_book_lib import random_string as rand_str
 
 
 testdata = [Group(name="", header="", footer="")]+[
-    Group(name=random_string("name_", 10),
-          header=random_string("header_", 15),
-          footer=random_string("footer_", 15))
+    Group(name=rand_str("name_", 10, punctuation=True),
+          header=rand_str("header_", 15, punctuation=True),
+          footer=rand_str("footer_", 15, punctuation=True))
     for i in range(5)
 ]
 
