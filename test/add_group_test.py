@@ -5,9 +5,9 @@ from test.address_book_lib import random_string as rand_str
 
 
 testdata = [Group(name="", header="", footer="")]+[
-    Group(name=rand_str("name_", 10, punctuation=True),
-          header=rand_str("header_", 15, punctuation=True),
-          footer=rand_str("footer_", 15, punctuation=True))
+    Group(name=rand_str("name_", 10, spaces=False),
+          header=rand_str("header_", 15),
+          footer=rand_str("footer_", 15))
     for i in range(5)
 ]
 
