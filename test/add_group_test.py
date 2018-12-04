@@ -1,15 +1,7 @@
 # -*- coding: utf-8 -*-
 from model.group import Group
 import pytest
-from test.address_book_lib import random_string as rand_str
-
-
-testdata = [Group(name="", header="", footer="")]+[
-    Group(name=rand_str("name_", 10, spaces=False),
-          header=rand_str("header_", 15),
-          footer=rand_str("footer_", 15))
-    for i in range(5)
-]
+from generator.group import testdata
 
 
 @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])

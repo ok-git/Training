@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from model.contact import Contact
 import pytest
-from test.address_book_lib import random_day_of_month
-from test.address_book_lib import random_month
-from test.address_book_lib import random_year
-from test.address_book_lib import random_string as rand_str
+from generator.generator_lib import random_day_of_month
+from generator.generator_lib import random_month
+from generator.generator_lib import random_year
+from generator.generator_lib import random_string as rand_str
 
 
 testdata = [Contact(
