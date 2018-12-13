@@ -6,7 +6,8 @@ def test_delete_some_contact(app):
     if app.contact.count() == 0:
         app.contact.create(Contact(
             firstname="Петр",
-            lastname="Петров"))
+            lastname="Петров",
+            address="г. Город, ул. Улица, д. 1, оф. 305"))
     old_contacts = app.contact.get_contacts_list()
     index = randrange(len(old_contacts))
     app.contact.delete_contact_by_index(index)
