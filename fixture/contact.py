@@ -43,6 +43,16 @@ class ContactHelper:
         wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
         self.contacts_cache = None
 
+    def edit_contact_by_id(self, new_contact):
+        wd = self.app.wd
+        self.app.open_home_page()
+        # init edition
+        wd.find_element_by_css_selector("a[href='edit.php?id=%s']" % new_contact.id).click()
+        self.fill_contact_form(new_contact)
+        # accept contact edition
+        wd.find_element_by_xpath("(//input[@name='update'])[2]").click()
+        self.contacts_cache = None
+
     def delete_first_contact(self):
         self.delete_contact_by_index(0)
 
@@ -66,7 +76,6 @@ class ContactHelper:
         wd = self.app.wd
         self.app.open_home_page()
         # select contact
-        # wd.find_elements_by_name("selected[]")[index].click()
         wd.find_element_by_css_selector("input[value='%s']" % id).click()
         # delete contact
         wd.find_element_by_xpath("//input[@value='Delete']").click()
@@ -78,7 +87,6 @@ class ContactHelper:
         wd.find_element_by_xpath("//input[@value='Delete']")
         # Slowdown method to make deletion test more stable - end
         self.contacts_cache = None
-
 
     def create(self, Contact):
         wd = self.app.wd

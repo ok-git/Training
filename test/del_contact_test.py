@@ -10,7 +10,6 @@ def test_delete_some_contact(app, db, check_ui):
             address="г. Город, ул. Улица, д. 1, оф. 305"))
     old_contacts = db.get_contacts_list()
     contact = random.choice(old_contacts)
-    # index = randrange(len(old_contacts))
     app.contact.delete_contact_by_id(contact.id)
     new_contacts = db.get_contacts_list()
     # assert len(old_contacts) - 1 == len(new_contacts)

@@ -7,9 +7,7 @@ def test_edit_some_group(app, db, check_ui):
         app.group.create(Group(name="Test Name", footer="Test Footer"))
     old_groups = db.get_group_list()
     group = random.choice(old_groups)
-    # index = randrange(len(old_groups))
     group.name = "Change Name Only"
-    # group.id = old_groups[index].id
     app.group.edit_group_by_id(group)
     new_groups = db.get_group_list()
     # assert len(old_groups) == len(new_groups)
