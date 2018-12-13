@@ -62,6 +62,24 @@ class ContactHelper:
         # Slowdown method to make deletion test more stable - end
         self.contacts_cache = None
 
+    def delete_contact_by_id(self, id):
+        wd = self.app.wd
+        self.app.open_home_page()
+        # select contact
+        # wd.find_elements_by_name("selected[]")[index].click()
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        # delete contact
+        wd.find_element_by_xpath("//input[@value='Delete']").click()
+        # accept deletion
+        wd.switch_to.alert.accept()
+        # Slowdown method to make deletion test more stable - begin
+        wd.find_element_by_css_selector("div.msgbox")
+        wd.get("http://localhost/addressbook/")
+        wd.find_element_by_xpath("//input[@value='Delete']")
+        # Slowdown method to make deletion test more stable - end
+        self.contacts_cache = None
+
+
     def create(self, Contact):
         wd = self.app.wd
         self.app.open_home_page()
