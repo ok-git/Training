@@ -6,6 +6,17 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    def add_contact_to_group_by_id(self, contact, group):
+        wd = self.app.wd
+        self.app.open_home_page()
+        # select contact
+        wd.find_element_by_css_selector("input[value='%s']" % contact.id).click()
+        # select group by group_name
+        Select(wd.find_element_by_name("to_group")).select_by_visible_text(group.name)
+        # add contact to group in the Add_group dropdown box
+        wd.find_element_by_name("add").click()
+        self.app.open_home_page()
+
     def remove_all_contacts_from_group(self, Group):
         wd = self.app.wd
         self.app.open_home_page()
@@ -26,7 +37,7 @@ class ContactHelper:
         self.select_all_contacts()
         # select group by group_name
         Select(wd.find_element_by_name("to_group")).select_by_visible_text(Group.name)
-        #add contacts to first group in the Add_group dropdown box
+        # add contacts to group in the Add_group dropdown box
         wd.find_element_by_name("add").click()
         self.app.open_home_page()
 
