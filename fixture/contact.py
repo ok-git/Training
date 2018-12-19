@@ -9,18 +9,31 @@ class ContactHelper:
     def add_contact_to_group_by_id(self, contact, group):
         wd = self.app.wd
         self.app.open_home_page()
-        # select contact
-        wd.find_element_by_css_selector("input[value='%s']" % contact.id).click()
+        self.select_contact_by_id(contact.id)
         # select group by group_name
         Select(wd.find_element_by_name("to_group")).select_by_visible_text(group.name)
         # add contact to group in the Add_group dropdown box
         wd.find_element_by_name("add").click()
         self.app.open_home_page()
 
+    def disconnect_contact_from_group(self, contact, group):
+        wd = self.app.wd
+        self.app.open_home_page()
+        # select group by group_name
+        Select(wd.find_element_by_name("group")).select_by_visible_text(group.name)
+        self.select_contact_by_id(contact.id)
+        # disconnect contact from group
+        wd.find_element_by_name("remove").click()
+        self.app.open_home_page()
+
+    def select_contact_by_id(self, id):
+        wd = self.app.wd
+        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+
     def remove_all_contacts_from_group(self, Group):
         wd = self.app.wd
         self.app.open_home_page()
-        #select group by group_name
+        # select group by group_name
         Select(wd.find_element_by_name("group")).select_by_visible_text(Group.name)
         self.select_all_contacts()
         # remove contacts from group
@@ -86,8 +99,7 @@ class ContactHelper:
     def delete_contact_by_id(self, id):
         wd = self.app.wd
         self.app.open_home_page()
-        # select contact
-        wd.find_element_by_css_selector("input[value='%s']" % id).click()
+        self.select_contact_by_id(id)
         # delete contact
         wd.find_element_by_xpath("//input[@value='Delete']").click()
         # accept deletion
