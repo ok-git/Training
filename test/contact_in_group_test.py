@@ -1,8 +1,10 @@
 from model.contact import Contact
 from model.group import Group
 import random
+# import pytest
 
 
+# @pytest.mark.skip(reason="no way of currently testing this")
 def test_add_some_contact_to_some_group(app, db, ormdb):
     if len(db.get_contacts_list()) == 0:
         app.contact.create(Contact(
@@ -18,6 +20,13 @@ def test_add_some_contact_to_some_group(app, db, ormdb):
 
 
 def test_del_some_contact_from_some_group(app, db, ormdb):
+    if len(db.get_contacts_list()) == 0:
+        app.contact.create(Contact(
+            firstname="Петр",
+            lastname="Петров",
+            address="г. Город, ул. Улица, д. 1, оф. 305"))
+    if len(db.get_group_list()) == 0:
+        app.group.create(Group(name="Test Group to add Contact"))
     if len(ormdb.get_groups_with_contacts()) == 0:
         test_add_some_contact_to_some_group(app, db, ormdb)
     group_to_disconnect = random.choice(ormdb.get_groups_with_contacts())
