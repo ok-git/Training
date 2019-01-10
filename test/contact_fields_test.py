@@ -20,7 +20,12 @@ def test_contact_fields_comparison(app, db, check_ui):
     for contact in contacts_from_db:
         contact.all_phones_from_homepage = merge_phones_like_on_home_page(contact)
         contact.all_emails_from_homepage = merge_emails_like_on_home_page(contact)
-    assert sorted(contacts_from_home_page, key=Contact.id_or_max) == sorted(contacts_from_db, key=Contact.id_or_max)
+    contacts_from_home_page = sorted(contacts_from_home_page, key=Contact.id_or_max)
+    contacts_from_db = sorted(contacts_from_db, key=Contact.id_or_max)
+    assert contacts_from_home_page == contacts_from_db
+    for i in range(len(contacts_from_db)):
+        assert contacts_from_home_page[i].all_phones_from_homepage == contacts_from_db[i].all_phones_from_homepage
+        assert contacts_from_home_page[i].all_emails_from_homepage == contacts_from_db[i].all_emails_from_homepage
     if check_ui:
         index = randrange(app.contact.count())
         contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
